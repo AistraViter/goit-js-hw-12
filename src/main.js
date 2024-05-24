@@ -26,8 +26,7 @@ searchForm.addEventListener('submit', event => {
     loader.style.display = 'block';
 
     fetchImages(query) // прихід з бекенду у джейсоні
-    .then(response => {
-      const data = response.data; // axios повертає об'єкт, де дані знаходяться у властивості 'data'
+    .then(data => {
       if (data.totalHits >= 1) {
           const elements = createImageElements(data.hits);
           updateGallery(gallery, elements);
