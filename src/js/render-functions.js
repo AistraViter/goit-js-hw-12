@@ -72,7 +72,7 @@ export function initializeLightbox() {
 export function showErrorToast(message) {
   iziToast.show({
     class: 'promise-message',
-    iconUrl: '/goit-js-hw-11/cancel-circle.svg',
+    iconUrl: '/goit-js-hw-12/cancel-circle.svg',
     iconColor: 'whte',
     message: message,
     messageColor: 'white',
