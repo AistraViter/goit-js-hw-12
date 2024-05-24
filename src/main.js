@@ -1,4 +1,4 @@
-import { fetchImages } from './js/pixabay-api';
+import { axiosImages } from './js/pixabay-api';
 import {
   createImageElements,
   updateGallery,
@@ -25,9 +25,10 @@ searchForm.addEventListener('submit', event => {
   if (query !== '') {
     loader.style.display = 'block';
 
-    fetchImages(query) // прихід з бекенду у джейсоні
-      .then(data => {
-        if (data.totalHits >= 1) {
+    axiosImages(query) // прихід з бекенду у джейсоні
+    .then(response => {
+      const data = response.data; // axios повертає об'єкт, де дані знаходяться у властивості 'data'
+      if (data.totalHits >= 1) {
           const elements = createImageElements(data.hits);
           updateGallery(gallery, elements);
           let lightbox = initializeLightbox();
