@@ -1,0 +1,122 @@
+/**
+  |============================
+  | include css partials with
+  | default @import url()
+  |============================
+*/
+@import url('./reset.css');
+
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+
+  color: #242424;
+  background-color: rgba(255, 255, 255, 0.87);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+.container {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+}
+
+/**FORM*/
+
+#input-search {
+  width: 272px;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid #808080;
+  border-radius: 4px;
+}
+#input-search:hover {
+  border: 1px solid #000;
+}
+
+#input-search:focus {
+  border-color: blue !important;
+}
+.btn-submit {
+  width: 96px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: #4e75ff;
+  border: none;
+  color: white;
+  margin-top: 8px;
+}
+
+.btn-submit:hover {
+  background-color: #6c8cff;
+}
+
+/**Gallery*/
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery-item {
+  min-width: 350px;
+  list-style: none;
+  width: calc(25% - 20px); /* Adjust based on your layout */
+  height: 240px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  border: 2px solid black; /* Додавання рамки до зображень */
+}
+
+.gallery-link {
+}
+
+.gallery-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.image-caption {
+  display: flex;
+  gap: 8px;
+  color: black;
+  padding: 4px;
+  width: 100%;
+  text-align: center;
+}
+
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  position: fixed;
+  left: 42%;
+  top: 10%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
