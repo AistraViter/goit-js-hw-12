@@ -68,7 +68,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
-  justify-content: center;
+  justify-content: baseline;
   align-items: center;
 }
 
@@ -119,4 +119,8 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+#btn-load-more {
+  display: none;
 }
