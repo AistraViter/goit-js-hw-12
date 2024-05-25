@@ -1,7 +1,7 @@
-import { fetchImages } from './js/pixabay-api';
-import { perPage } from './js/pixabay-api';
+import { perPage, fetchImages } from './js/pixabay-api';
 
 import {
+  backgroundColor,
   createImageElements,
   updateGallery,
   initializeLightbox,
@@ -14,7 +14,6 @@ const searchField = document.querySelector('#input-search');
 const gallery = document.querySelector('ul.gallery');
 const loadMoreBtn = document.querySelector('#btn-load-more');
 const loadMoreContainer = document.querySelector('.load-more-container');
-
 
 let page;
 let query;
@@ -60,20 +59,42 @@ searchForm.addEventListener('submit', event => {
         hitsToShow = data.totalHits;
         if (hitsToShow >= 1) {
           const elements = createImageElements(data.hits);
-          console.log(elements.length);
           updateGallery(gallery, elements);
           let lightbox = initializeLightbox();
           lightbox.refresh();
-          loadMoreBtn.style.display = 'block';
+          const galleryItem = document.querySelector('.gallery-item');
+          if (galleryItem) {
+            const scroll = galleryItem.getBoundingClientRect();
+            const scrollHeight = scroll.height * 2;
+  
+            window.scrollBy({
+              top: scrollHeight,
+              left: 0,
+              behavior: 'smooth',
+            });
+          }
+  
+          console.log(galleryItem.getBoundingClientRect());
+
+          if (hitsToShow - perPage >= 1) {
+            loadMoreBtn.style.display = 'block';
+          } else {
+            showErrorToast(
+              "We're sorry, but you've reached the end of search results.",
+              'blue'
+            );
+          }
         } else {
           showErrorToast(
-            'Sorry, there are no images matching your search query. Please try again!'
+            'Sorry, there are no images matching your search query. Please try again!',
+            'red'
           );
         }
       })
       .catch(error => {
         showErrorToast(
-          'An error occurred while fetching the images. Please try again!'
+          'An error occurred while fetching the images. Please try again!',
+          'red'
         );
         console.log(error);
       })
@@ -95,22 +116,41 @@ loadMoreBtn.addEventListener('click', event => {
   fetchImages(query, page)
     .then(data => {
       hitsToShow = data.totalHits - (page - 1) * perPage;
+      loadMoreBtn.style.display = 'none';
 
       if (hitsToShow >= 1) {
         const elements = createImageElements(data.hits);
         gallery.append(...elements);
         let lightbox = initializeLightbox();
         lightbox.refresh();
-        loadMoreBtn.style.display = 'block';
-      } else {
-        showErrorToast(
-          'Sorry, there are no images matching your search query. Please try again!'
-        );
+        const galleryItem = document.querySelector('.gallery-item');
+        if (galleryItem) {
+          const scroll = galleryItem.getBoundingClientRect();
+          const scrollHeight = scroll.height * 2;
+
+          window.scrollBy({
+            top: 500,
+            left: 0,
+            behavior: 'smooth',
+          });
+        }
+
+        if (hitsToShow - perPage >= 1) {
+          setTimeout(() => {
+            loadMoreBtn.style.display = 'block';
+          }, 2000);
+        } else {
+          showErrorToast(
+            "We're sorry, but you've reached the end of search results.",
+            'blue'
+          );
+        }
       }
     })
     .catch(error => {
       showErrorToast(
-        'An error occurred while fetching the images. Please try again!'
+        'An error occurred while fetching the images. Please try again!',
+        'red'
       );
       console.log(error);
     })
@@ -119,6 +159,6 @@ loadMoreBtn.addEventListener('click', event => {
       setTimeout(() => {
         hideLoader();
         searchForm.reset();
-      }, 10000); // Затримка у мілісекундах (тут 2000 мс = 2 сек)
+      }, 5000); // Затримка у мілісекундах (тут 2000 мс = 2 сек)
     });
 });

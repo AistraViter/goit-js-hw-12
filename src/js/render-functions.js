@@ -3,15 +3,14 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-
+//Функція створює структуру для галереї зображень
 export function createImageElements(images) {
   return images.map(image => {
-    // Використовуємо data.hits для доступу до зображень
     const li = document.createElement('li');
     li.classList.add('gallery-item');
     const link = document.createElement('a');
     link.classList.add('gallery-link');
-    link.href = image.largeImageURL; // Використовуйте правильний URL для посилання
+    link.href = image.largeImageURL;
     const img = document.createElement('img');
     img.classList.add('gallery-image');
     img.src = image.webformatURL;
@@ -53,11 +52,13 @@ export function createImageElements(images) {
   });
 }
 
+//Функція очищує галерею та створює нові елементи згідно раніше створеної структури
 export function updateGallery(gallery, elements) {
   gallery.innerHTML = '';
   gallery.append(...elements);
 }
 
+//Функція для збільшення зображення з бібліотекою SimpleLightbox
 export function initializeLightbox() {
   return new SimpleLightbox('.gallery a', {
     captions: true, // Увімкнути підписи
@@ -69,7 +70,10 @@ export function initializeLightbox() {
   });
 }
 
-export function showErrorToast(message) {
+
+//Функція для створення повідомлень з бібліотекою iziToast
+export let backgroundColor = 'red';
+export function showErrorToast(message, backgroundColor) {
   iziToast.show({
     class: 'promise-message',
     iconUrl: '/goit-js-hw-12/cancel-circle.svg',
@@ -77,7 +81,7 @@ export function showErrorToast(message) {
     message: message,
     messageColor: 'white',
     messageSize: '18',
-    backgroundColor: 'red',
+    backgroundColor: backgroundColor,
     position: 'topRight',
     class: 'custom-toast',
     icon: 'iziToast-icon',
