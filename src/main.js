@@ -7,7 +7,7 @@ import {
   initializeLightbox,
   showErrorToast,
   showLoader,
-  hideLoader
+  hideLoader,
 } from './js/render-functions';
 
 //querySelectors
@@ -15,14 +15,16 @@ const searchForm = document.querySelector('.search-form');
 const searchField = document.querySelector('#input-search');
 const gallery = document.querySelector('ul.gallery');
 const loadMoreBtn = document.querySelector('#btn-load-more');
-const loadMoreAfterSearchform = document.querySelector('.loadmore-after-searchform-container');
-const loadMoreAfterBtn = document.querySelector('.loadmore-after-btn-container');
-
+const loadMoreAfterSearchform = document.querySelector(
+  '.loadmore-after-searchform-container'
+);
+const loadMoreAfterBtn = document.querySelector(
+  '.loadmore-after-btn-container'
+);
 
 let page;
 let query;
 let hitsToShow;
-
 
 //SEARCH FORM
 searchForm.addEventListener('submit', event => {
@@ -44,14 +46,14 @@ searchForm.addEventListener('submit', event => {
           if (galleryItem) {
             const scroll = galleryItem.getBoundingClientRect();
             const scrollHeight = scroll.height * 2;
-  
+
             window.scrollBy({
               top: scrollHeight,
               left: 0,
               behavior: 'smooth',
             });
           }
-  
+
           console.log(galleryItem.getBoundingClientRect());
 
           if (hitsToShow - perPage >= 1) {
@@ -77,11 +79,8 @@ searchForm.addEventListener('submit', event => {
         console.log(error);
       })
       .finally(() => {
-        // Затримка для тестування
-        setTimeout(() => {
-       //   hideLoader();
-          searchForm.reset();
-        }, 2000); // Затримка у мілісекундах (тут 2000 мс = 2 сек)
+        hideLoader();
+        searchForm.reset();
       });
   }
 });
@@ -133,10 +132,7 @@ loadMoreBtn.addEventListener('click', event => {
       console.log(error);
     })
     .finally(() => {
-      // Затримка для тестування
-      setTimeout(() => {
-      //  hideLoader();
-        searchForm.reset();
-      }, 5000); // Затримка у мілісекундах (тут 2000 мс = 2 сек)
+      hideLoader();
+      searchForm.reset();
     });
 });
