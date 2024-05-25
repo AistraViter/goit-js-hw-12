@@ -3,6 +3,24 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
+// Функції що стосуються завантаження та видалення loader
+
+export function showLoader(formWhereShow) {
+  const loader = document.createElement('p');
+  loader.classList.add('loader');
+  loader.textContent = 'Loading images, please wait';
+  loader.style.display = 'block';
+  return formWhereShow.append(loader);
+}
+export function hideLoader() {
+  const loader = document.querySelector('.loader');
+  return setTimeout(() => {
+    loader.style.display = 'none';
+    loader.remove();
+  }, 2000); // Затримка для тестування
+}
+
+
 //Функція створює структуру для галереї зображень
 export function createImageElements(images) {
   return images.map(image => {
@@ -71,8 +89,7 @@ export function initializeLightbox() {
 }
 
 //Функція для створення повідомлень з бібліотекою iziToast
-export let backgroundColor = 'red';
-export function showErrorToast(message, backgroundColor) {
+export function showErrorToast(message, position, backgroundColor) {
   iziToast.show({
     class: 'promise-message',
     iconUrl: '/goit-js-hw-12/cancel-circle.svg',
@@ -81,25 +98,10 @@ export function showErrorToast(message, backgroundColor) {
     messageColor: 'white',
     messageSize: '18',
     backgroundColor: backgroundColor,
-    position: 'topRight',
+    position: position,
     class: 'custom-toast',
     icon: 'iziToast-icon',
   });
 }
 
-// Функції що стосуються завантаження та видалення loader
-
-export function showLoader(formWhereShow) {
-  const loader = document.createElement('p');
-  loader.classList.add('loader');
-  loader.textContent = 'Loading images, please wait';
-  loader.style.display = 'block';
-  return formWhereShow.append(loader); //searchForm
-}
-export function hideLoader() {
-  const loader = document.querySelector('.loader');
-  return setTimeout(() => {
-    loader.style.display = 'none';
-    loader.remove();
-  }, 2000); // Затримка для тестування
-}
+//    position: 'topRight',

@@ -1,7 +1,6 @@
 import { perPage, fetchImages } from './js/pixabay-api';
 
 import {
-  backgroundColor,
   createImageElements,
   updateGallery,
   initializeLightbox,
@@ -61,12 +60,14 @@ searchForm.addEventListener('submit', event => {
           } else {
             showErrorToast(
               "We're sorry, but you've reached the end of search results.",
+              "bottomRight",
               'blue'
             );
           }
         } else {
           showErrorToast(
             'Sorry, there are no images matching your search query. Please try again!',
+            "topRight",
             'red'
           );
         }
@@ -74,6 +75,7 @@ searchForm.addEventListener('submit', event => {
       .catch(error => {
         showErrorToast(
           'An error occurred while fetching the images. Please try again!',
+          "topRight",
           'red'
         );
         console.log(error);
@@ -88,6 +90,7 @@ searchForm.addEventListener('submit', event => {
 //LOAD MORE
 loadMoreBtn.addEventListener('click', event => {
   event.preventDefault();
+
   showLoader(loadMoreAfterBtn);
   page++;
   fetchImages(query, page)
@@ -119,6 +122,7 @@ loadMoreBtn.addEventListener('click', event => {
         } else {
           showErrorToast(
             "We're sorry, but you've reached the end of search results.",
+            "bottomRight",
             'blue'
           );
         }
@@ -127,6 +131,7 @@ loadMoreBtn.addEventListener('click', event => {
     .catch(error => {
       showErrorToast(
         'An error occurred while fetching the images. Please try again!',
+        "topRight",
         'red'
       );
       console.log(error);
