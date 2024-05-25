@@ -14,12 +14,9 @@ export function showLoader(formWhereShow) {
 }
 export function hideLoader() {
   const loader = document.querySelector('.loader');
-  return setTimeout(() => {
-    loader.style.display = 'none';
-    loader.remove();
-  }, 2000); // Затримка для тестування
+  loader.style.display = 'none';
+  loader.remove();
 }
-
 
 //Функція створює структуру для галереї зображень
 export function createImageElements(images) {
@@ -104,4 +101,16 @@ export function showErrorToast(message, position, backgroundColor) {
   });
 }
 
-//    position: 'topRight',
+//  Функція для скролу
+export function scrollByHeight() {
+  const galleryItem = document.querySelector('.gallery-item');
+  if (galleryItem) {
+    const scroll = galleryItem.getBoundingClientRect();
+    const scrollHeight = scroll.height *2;
+    window.scrollBy({
+      top: scrollHeight,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }
+}

@@ -7,6 +7,7 @@ import {
   showErrorToast,
   showLoader,
   hideLoader,
+  scrollByHeight,
 } from './js/render-functions';
 
 //querySelectors
@@ -29,11 +30,9 @@ let hitsToShow;
 searchForm.addEventListener('submit', event => {
   event.preventDefault();
   query = searchField.value.trim();
-
+  showLoader(loadMoreAfterSearchform);
   if (query !== '') {
-    showLoader(loadMoreAfterSearchform);
-    page = 1;
-    fetchImages(query, page)
+    fetchImages(query, (page = 1))
       .then(data => {
         hitsToShow = data.totalHits;
         if (hitsToShow >= 1) {
@@ -41,33 +40,21 @@ searchForm.addEventListener('submit', event => {
           updateGallery(gallery, elements);
           let lightbox = initializeLightbox();
           lightbox.refresh();
-          const galleryItem = document.querySelector('.gallery-item');
-          if (galleryItem) {
-            const scroll = galleryItem.getBoundingClientRect();
-            const scrollHeight = scroll.height * 2;
-
-            window.scrollBy({
-              top: scrollHeight,
-              left: 0,
-              behavior: 'smooth',
-            });
-          }
-
-          console.log(galleryItem.getBoundingClientRect());
-
+          scrollByHeight();
           if (hitsToShow - perPage >= 1) {
             loadMoreBtn.style.display = 'block';
           } else {
+            loadMoreBtn.style.display = 'none';
             showErrorToast(
               "We're sorry, but you've reached the end of search results.",
-              "bottomRight",
+              'bottomRight',
               'blue'
             );
           }
         } else {
           showErrorToast(
             'Sorry, there are no images matching your search query. Please try again!',
-            "topRight",
+            'topRight',
             'red'
           );
         }
@@ -75,7 +62,7 @@ searchForm.addEventListener('submit', event => {
       .catch(error => {
         showErrorToast(
           'An error occurred while fetching the images. Please try again!',
-          "topRight",
+          'topRight',
           'red'
         );
         console.log(error);
@@ -90,39 +77,25 @@ searchForm.addEventListener('submit', event => {
 //LOAD MORE
 loadMoreBtn.addEventListener('click', event => {
   event.preventDefault();
-
+  loadMoreBtn.style.display = 'none';
   showLoader(loadMoreAfterBtn);
   page++;
   fetchImages(query, page)
     .then(data => {
       hitsToShow = data.totalHits - (page - 1) * perPage;
-      loadMoreBtn.style.display = 'none';
-
       if (hitsToShow >= 1) {
         const elements = createImageElements(data.hits);
         gallery.append(...elements);
         let lightbox = initializeLightbox();
         lightbox.refresh();
-        const galleryItem = document.querySelector('.gallery-item');
-        if (galleryItem) {
-          const scroll = galleryItem.getBoundingClientRect();
-          const scrollHeight = scroll.height * 2;
-
-          window.scrollBy({
-            top: 500,
-            left: 0,
-            behavior: 'smooth',
-          });
-        }
-
+        scrollByHeight();
         if (hitsToShow - perPage >= 1) {
-          setTimeout(() => {
-            loadMoreBtn.style.display = 'block';
-          }, 2000);
+          loadMoreBtn.style.display = 'block';
         } else {
+          loadMoreBtn.style.display = 'none';
           showErrorToast(
             "We're sorry, but you've reached the end of search results.",
-            "bottomRight",
+            'bottomRight',
             'blue'
           );
         }
@@ -131,7 +104,7 @@ loadMoreBtn.addEventListener('click', event => {
     .catch(error => {
       showErrorToast(
         'An error occurred while fetching the images. Please try again!',
-        "topRight",
+        'topRight',
         'red'
       );
       console.log(error);
