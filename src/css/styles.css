@@ -100,30 +100,27 @@
   width: 100%;
   text-align: center;
 }
-.loader{
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-}
-.loader-text {
-  font-size: 16px;
-  color: black;
-
-
-}
- .loader-below-form {
-  padding: 40px;
-  position: fixed;
+ /*.loader-below-form {
   left: 50%;
   top: 12%;
-}
+}*/
 
-.load-more-container {
+.loadmore-after-btn-container,
+.loadmore-after-searchform-container {
   position: relative;
+  padding: 40px;
+
 
 }
 
-.loader-below-loadMoreBtn{
+.loader{
+  margin: 40px;
   position: absolute;
+  font-size: 16px;
+  color: black;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+
 
 }
 

@@ -70,7 +70,6 @@ export function initializeLightbox() {
   });
 }
 
-
 //Функція для створення повідомлень з бібліотекою iziToast
 export let backgroundColor = 'red';
 export function showErrorToast(message, backgroundColor) {
@@ -86,4 +85,26 @@ export function showErrorToast(message, backgroundColor) {
     class: 'custom-toast',
     icon: 'iziToast-icon',
   });
+}
+
+// Функції що стосуються завантаження та видалення loader
+
+export function showLoader(formWhereShow) {
+  const loader = document.createElement('p');
+  loader.classList.add('loader');
+  loader.textContent = 'Loads images, please wait';
+  loader.style.display = 'block';
+  return formWhereShow.append(loader); //searchForm
+}
+export function showLoaderSecond() {
+  loader.classList.add('loader-below-loadMoreBtn');
+  loadMoreContainer.append(loader);
+  loader.style.display = 'block';
+}
+
+export function hideLoader() {
+  loader.style.display = 'none';
+  loader.classList.remove('loader-below-form');
+  loader.classList.remove('loader-below-loadMoreBtn');
+  loader.remove();
 }

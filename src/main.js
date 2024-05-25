@@ -6,6 +6,8 @@ import {
   updateGallery,
   initializeLightbox,
   showErrorToast,
+  showLoader,
+  hideLoader
 } from './js/render-functions';
 
 //querySelectors
@@ -13,38 +15,14 @@ const searchForm = document.querySelector('.search-form');
 const searchField = document.querySelector('#input-search');
 const gallery = document.querySelector('ul.gallery');
 const loadMoreBtn = document.querySelector('#btn-load-more');
-const loadMoreContainer = document.querySelector('.load-more-container');
+const loadMoreAfterSearchform = document.querySelector('.loadmore-after-searchform-container');
+const loadMoreAfterBtn = document.querySelector('.loadmore-after-btn-container');
+
 
 let page;
 let query;
 let hitsToShow;
 
-// loader is created
-const loader = document.createElement('div');
-loader.classList.add('loader');
-const loaderText = document.createElement('p');
-loaderText.classList.add('loader-text');
-loaderText.textContent = 'Loads images, please wait';
-loader.append(loaderText);
-
-function showLoaderFirst() {
-  loader.classList.add('loader-below-form');
-  searchForm.append(loader);
-  loader.style.display = 'block';
-}
-
-function showLoaderSecond() {
-  loader.classList.add('loader-below-loadMoreBtn');
-  loadMoreContainer.append(loader);
-  loader.style.display = 'block';
-}
-
-function hideLoader() {
-  loader.style.display = 'none';
-  loader.classList.remove('loader-below-form');
-  loader.classList.remove('loader-below-loadMoreBtn');
-  loader.remove();
-}
 
 //SEARCH FORM
 searchForm.addEventListener('submit', event => {
@@ -52,7 +30,7 @@ searchForm.addEventListener('submit', event => {
   query = searchField.value.trim();
 
   if (query !== '') {
-    showLoaderFirst();
+    showLoader(loadMoreAfterSearchform);
     page = 1;
     fetchImages(query, page)
       .then(data => {
@@ -101,7 +79,7 @@ searchForm.addEventListener('submit', event => {
       .finally(() => {
         // Затримка для тестування
         setTimeout(() => {
-          hideLoader();
+       //   hideLoader();
           searchForm.reset();
         }, 2000); // Затримка у мілісекундах (тут 2000 мс = 2 сек)
       });
@@ -111,7 +89,7 @@ searchForm.addEventListener('submit', event => {
 //LOAD MORE
 loadMoreBtn.addEventListener('click', event => {
   event.preventDefault();
-  showLoaderSecond();
+  showLoader(loadMoreAfterBtn);
   page++;
   fetchImages(query, page)
     .then(data => {
@@ -157,7 +135,7 @@ loadMoreBtn.addEventListener('click', event => {
     .finally(() => {
       // Затримка для тестування
       setTimeout(() => {
-        hideLoader();
+      //  hideLoader();
         searchForm.reset();
       }, 5000); // Затримка у мілісекундах (тут 2000 мс = 2 сек)
     });
