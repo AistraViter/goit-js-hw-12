@@ -27,8 +27,7 @@ document.body.appendChild(loader);
 //SEARCH FORM
 searchForm.addEventListener('submit', event => {
   event.preventDefault();
-  const query = searchField.value.trim();
-
+  query = searchField.value.trim();
 
   if (query !== '') {
     loader.style.display = 'block';
@@ -37,7 +36,7 @@ searchForm.addEventListener('submit', event => {
       .then(data => {
         hitsToShow = data.totalHits;
         if (hitsToShow >= 1) {
-            const elements = createImageElements(data.hits);
+          const elements = createImageElements(data.hits);
           console.log(elements.length);
           updateGallery(gallery, elements);
           let lightbox = initializeLightbox();
@@ -57,7 +56,7 @@ searchForm.addEventListener('submit', event => {
       })
       .finally(() => {
         loader.style.display = 'none';
-       // searchForm.reset(); 
+        searchForm.reset();
       });
   }
 });
@@ -65,21 +64,20 @@ searchForm.addEventListener('submit', event => {
 //LOAD MORE
 loadMoreBtn.addEventListener('click', event => {
   event.preventDefault();
-  const query = searchField.value.trim();
 
   loader.style.display = 'block';
   page++;
   fetchImages(query, page)
     .then(data => {
       hitsToShow = data.totalHits - (page - 1) * perPage;
-      
+
       if (hitsToShow >= 1) {
         const elements = createImageElements(data.hits);
         gallery.append(...elements);
         let lightbox = initializeLightbox();
         lightbox.refresh();
         loadMoreBtn.style.display = 'block';
-    } else {
+      } else {
         showErrorToast(
           'Sorry, there are no images matching your search query. Please try again!'
         );
@@ -93,5 +91,6 @@ loadMoreBtn.addEventListener('click', event => {
     })
     .finally(() => {
       loader.style.display = 'none';
+      searchForm.reset();
     });
 });
