@@ -13,16 +13,39 @@ const searchForm = document.querySelector('.search-form');
 const searchField = document.querySelector('#input-search');
 const gallery = document.querySelector('ul.gallery');
 const loadMoreBtn = document.querySelector('#btn-load-more');
+const loadMoreContainer = document.querySelector('.load-more-container');
+
 
 let page;
 let query;
 let hitsToShow;
 
-//loader is created
+// loader is created
 const loader = document.createElement('div');
 loader.classList.add('loader');
-loader.style.display = 'none';
-document.body.appendChild(loader);
+const loaderText = document.createElement('p');
+loaderText.classList.add('loader-text');
+loaderText.textContent = 'Loads images, please wait';
+loader.append(loaderText);
+
+function showLoaderFirst() {
+  loader.classList.add('loader-below-form');
+  searchForm.append(loader);
+  loader.style.display = 'block';
+}
+
+function showLoaderSecond() {
+  loader.classList.add('loader-below-loadMoreBtn');
+  loadMoreContainer.append(loader);
+  loader.style.display = 'block';
+}
+
+function hideLoader() {
+  loader.style.display = 'none';
+  loader.classList.remove('loader-below-form');
+  loader.classList.remove('loader-below-loadMoreBtn');
+  loader.remove();
+}
 
 //SEARCH FORM
 searchForm.addEventListener('submit', event => {
@@ -30,7 +53,7 @@ searchForm.addEventListener('submit', event => {
   query = searchField.value.trim();
 
   if (query !== '') {
-    loader.style.display = 'block';
+    showLoaderFirst();
     page = 1;
     fetchImages(query, page)
       .then(data => {
@@ -55,8 +78,11 @@ searchForm.addEventListener('submit', event => {
         console.log(error);
       })
       .finally(() => {
-        loader.style.display = 'none';
-        searchForm.reset();
+        // Затримка для тестування
+        setTimeout(() => {
+          hideLoader();
+          searchForm.reset();
+        }, 2000); // Затримка у мілісекундах (тут 2000 мс = 2 сек)
       });
   }
 });
@@ -64,8 +90,7 @@ searchForm.addEventListener('submit', event => {
 //LOAD MORE
 loadMoreBtn.addEventListener('click', event => {
   event.preventDefault();
-
-  loader.style.display = 'block';
+  showLoaderSecond();
   page++;
   fetchImages(query, page)
     .then(data => {
@@ -90,7 +115,10 @@ loadMoreBtn.addEventListener('click', event => {
       console.log(error);
     })
     .finally(() => {
-      loader.style.display = 'none';
-      searchForm.reset();
+      // Затримка для тестування
+      setTimeout(() => {
+        hideLoader();
+        searchForm.reset();
+      }, 10000); // Затримка у мілісекундах (тут 2000 мс = 2 сек)
     });
 });

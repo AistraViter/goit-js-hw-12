@@ -100,9 +100,34 @@
   width: 100%;
   text-align: center;
 }
+.loader{
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+.loader-text {
+  font-size: 16px;
+  color: black;
 
 
-.loader {
+}
+ .loader-below-form {
+  padding: 40px;
+  position: fixed;
+  left: 50%;
+  top: 12%;
+}
+
+.load-more-container {
+  position: relative;
+
+}
+
+.loader-below-loadMoreBtn{
+  position: absolute;
+
+}
+
+/**.loader {
   border: 16px solid #f3f3f3;
   border-radius: 50%;
   border-top: 16px solid #3498db;
@@ -119,7 +144,7 @@
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
+}*/
 
 #btn-load-more {
   display: none;
