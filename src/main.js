@@ -57,7 +57,7 @@ searchForm.addEventListener('submit', event => {
       })
       .finally(() => {
         loader.style.display = 'none';
-        searchForm.reset(); // Скидання всієї форми
+       // searchForm.reset(); 
       });
   }
 });
@@ -65,14 +65,17 @@ searchForm.addEventListener('submit', event => {
 //LOAD MORE
 loadMoreBtn.addEventListener('click', event => {
   event.preventDefault();
+  const query = searchField.value.trim();
+
   loader.style.display = 'block';
   page++;
   fetchImages(query, page)
     .then(data => {
       hitsToShow = data.totalHits - (page - 1) * perPage;
+      
       if (hitsToShow >= 1) {
         const elements = createImageElements(data.hits);
-        updateGallery(gallery, elements);
+        gallery.append(...elements);
         let lightbox = initializeLightbox();
         lightbox.refresh();
         loadMoreBtn.style.display = 'block';
@@ -90,6 +93,5 @@ loadMoreBtn.addEventListener('click', event => {
     })
     .finally(() => {
       loader.style.display = 'none';
-      searchForm.reset(); // Скидання всієї форми
     });
 });
