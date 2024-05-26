@@ -30,8 +30,8 @@ let hitsToShow;
 searchForm.addEventListener('submit', event => {
   event.preventDefault();
   query = searchField.value.trim();
-  showLoader(loadMoreAfterSearchform);
   if (query !== '') {
+    showLoader(loadMoreAfterSearchform);
     fetchImages(query, (page = 1))
       .then(data => {
         hitsToShow = data.totalHits;
@@ -71,6 +71,15 @@ searchForm.addEventListener('submit', event => {
         hideLoader();
         searchForm.reset();
       });
+  } else {
+    gallery.innerHTML = '';
+    loadMoreBtn.style.display = 'none';
+    searchForm.reset();
+    showErrorToast(
+      'Please enter a search query!',
+      'topRight',
+      'red'
+    );
   }
 });
 

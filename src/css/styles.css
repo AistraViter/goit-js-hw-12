@@ -23,20 +23,41 @@
 }
 
 .container {
-  height: 100%;
-  margin: 0;
+  max-width: 786px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  justify-content: center;
   align-items: center;
 }
 
+/**loader*/
+.loadmore-after-btn-container,
+.loadmore-after-searchform-container {
+  width: 400px;
+  padding-bottom: 24px;
+  display: block;
+}
+
+.loader {
+  margin-top: 20px;
+  position: absolute;
+  font-size: 16px;
+  color: black;
+  z-index: 9999;
+  text-align: center;
+}
+
 /**FORM*/
+.search-form {
+  display: block;
+  width: 400px;
+}
 
 #input-search {
-  width: 272px;
+  position: relative;
+  width: 252px;
   height: 40px;
+  margin-right: 8px;
   padding: 0 16px;
   border: 1px solid #808080;
   border-radius: 4px;
@@ -55,7 +76,6 @@
   background-color: #4e75ff;
   border: none;
   color: white;
-  margin-top: 8px;
 }
 
 .btn-submit:hover {
@@ -65,6 +85,7 @@
 /**Gallery*/
 
 .gallery {
+  margin: 40px auto;
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
@@ -73,17 +94,13 @@
 }
 
 .gallery-item {
-  min-width: 350px;
   list-style: none;
-  width: calc(25% - 20px); /* Adjust based on your layout */
+  min-width: 350px;
+  width: calc((100% - 32px) / 2);
   height: 240px;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
   border: 2px solid black; /* Додавання рамки до зображень */
-}
-
-.gallery-link {
 }
 
 .gallery-image {
@@ -101,46 +118,50 @@
   text-align: center;
 }
 
-/**loader*/
-
-.loadmore-after-btn-container,
-.loadmore-after-searchform-container {
-  position: relative;
-  width: 480px;
-  padding: 40px 4px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.loader {
-  margin-top: 60px;
-  position: absolute;
-  font-size: 16px;
-  color: black;
-  z-index: 9999;
-}
-
-/**.loader {
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
-  position: fixed;
-  left: 42%;
-  top: 10%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}*/
-
 #btn-load-more {
+  position: relative;
   display: none;
+}
+
+@media (max-width: 767px) {
+  .container {
+    max-width: 320px;
+  }
+  .loadmore-after-btn-container,
+  .loadmore-after-searchform-container {
+    width: 320px;
+  }
+
+  .search-form {
+    width: 320px;
+  }
+
+  #input-search {
+    width: 284px;
+    margin-bottom: 12px;
+    margin-right: 0px;
+  }
+
+  .gallery-item {
+    min-width: 320px;
+    width: calc(100%);
+  }
+}
+@media (min-width: 1158px) {
+  .container {
+    max-width: 1158px;
+  }
+  .gallery-item {
+    min-width: 350px;
+    width: calc((100% - 60px) / 3); 
+  }
+}
+@media (min-width: 1492px) {
+  .container {
+    max-width: 1492px;
+  }
+  .gallery-item {
+    min-width: 350px;
+    width: calc((100% - 90px) / 4); 
+  }
 }

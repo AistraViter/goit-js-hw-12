@@ -15,21 +15,24 @@
 
   <body>
     <div class="container">
+      <!--Serch box-->
       <div class="loadmore-after-searchform-container">
+        <form class="search-form" autocomplete="off">
+          <input
+            id="input-search"
+            type="text"
+            name="text"
+            placeholder="Search images..."
+            autofocus
+          />
+          <button class="btn-submit" type="submit">Search</button>
+        </form>
+      </div>
 
-      <form class="search-form" autocomplete="off">
-        <input
-          id="input-search"
-          type="text"
-          name="text"
-          placeholder="Search images..."
-          autofocus
-        />
-        <button class="btn-submit" type="submit">Search</button>
-      </form>
-    </div>
-
+      <!--Gallery box-->
       <ul class="gallery"></ul>
+
+      <!--Load more box-->
       <div class="loadmore-after-btn-container">
         <button id="btn-load-more" class="btn-submit" type="button">
           Load more...
@@ -39,3 +42,5 @@
     <script src="./main.js" type="module"></script>
   </body>
 </html>
+
+<!-- Це коментар, він не відображатиметься на сторінці -->
