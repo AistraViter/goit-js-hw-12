@@ -36,25 +36,38 @@
   width: 400px;
   padding-bottom: 24px;
   display: block;
+  position: relative; /* Встановлюємо відносне позиціонування */
+  height: 40px; /* Задаємо висоту контейнера */
 }
 
 .loader {
-  margin-top: 20px;
   position: absolute;
   font-size: 16px;
   color: black;
   z-index: 9999;
   text-align: center;
+  white-space: nowrap; /* Забороняємо перенесення тексту */
+
+  top: 98%; /* Центруємо по вертикалі */
+  left: 50%; /* Центруємо по горизонталі */
+  transform: translate(
+    -50%,
+    -50%
+  ); /* Зміщуємо елемент назад на половину його розмірів */
+  overflow: hidden; /* Приховуємо текст, який виходить за межі контейнера */
+  text-overflow: ellipsis; /* Додаємо три крапки в кінці тексту, якщо він виходить за межі контейнера */
 }
 
 /**FORM*/
 .search-form {
-  display: block;
+  display: flex; /* Встановлюємо flex-контейнер */
+  justify-content: center; /* Центруємо по горизонталі */
+  align-items: center; /* Центруємо по вертикалі */
   width: 400px;
+  margin: 0 auto; /* Центруємо форму по горизонталі на сторінці */
 }
 
 #input-search {
-  position: relative;
   width: 252px;
   height: 40px;
   margin-right: 8px;
@@ -62,13 +75,7 @@
   border: 1px solid #808080;
   border-radius: 4px;
 }
-#input-search:hover {
-  border: 1px solid #000;
-}
 
-#input-search:focus {
-  border-color: blue !important;
-}
 .btn-submit {
   width: 96px;
   height: 40px;
@@ -76,6 +83,14 @@
   background-color: #4e75ff;
   border: none;
   color: white;
+}
+
+#input-search:hover {
+  border: 1px solid #000;
+}
+
+#input-search:focus {
+  border-color: blue !important;
 }
 
 .btn-submit:hover {
@@ -119,7 +134,7 @@
 }
 
 #btn-load-more {
-  position: relative;
+  margin: 0 auto;
   display: none;
 }
 
@@ -132,8 +147,20 @@
     width: 320px;
   }
 
+  .loadmore-after-searchform-container {
+    height: 80px; /* Задаємо висоту контейнера */
+  }
+  .loadmore-after-btn-container {
+    height: 35px; /* Задаємо висоту контейнера */
+  }
+
+  .loader {
+    top: 105%; /* Центруємо по вертикалі */
+  }
+
   .search-form {
     width: 320px;
+    flex-direction: column;
   }
 
   #input-search {
@@ -153,7 +180,7 @@
   }
   .gallery-item {
     min-width: 350px;
-    width: calc((100% - 60px) / 3); 
+    width: calc((100% - 60px) / 3);
   }
 }
 @media (min-width: 1492px) {
@@ -162,6 +189,6 @@
   }
   .gallery-item {
     min-width: 350px;
-    width: calc((100% - 90px) / 4); 
+    width: calc((100% - 90px) / 4);
   }
 }

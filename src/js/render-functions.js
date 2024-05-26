@@ -14,8 +14,8 @@ export function showLoader(formWhereShow) {
 }
 export function hideLoader() {
   const loader = document.querySelector('.loader');
-  loader.style.display = 'none';
-  loader.remove();
+    loader.style.display = 'none';
+    loader.remove();
 }
 
 //Функція створює структуру для галереї зображень

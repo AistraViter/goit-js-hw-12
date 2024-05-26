@@ -25,79 +25,22 @@ const loadMoreAfterBtn = document.querySelector(
 let page;
 let query;
 let hitsToShow;
+let lightbox = initializeLightbox();
 
 //SEARCH FORM
-searchForm.addEventListener('submit', event => {
+searchForm.addEventListener('submit', async event => {
   event.preventDefault();
   query = searchField.value.trim();
   if (query !== '') {
-    showLoader(loadMoreAfterSearchform);
-    fetchImages(query, (page = 1))
-      .then(data => {
-        hitsToShow = data.totalHits;
-        if (hitsToShow >= 1) {
-          const elements = createImageElements(data.hits);
-          updateGallery(gallery, elements);
-          let lightbox = initializeLightbox();
-          lightbox.refresh();
-          scrollByHeight();
-          if (hitsToShow - perPage >= 1) {
-            loadMoreBtn.style.display = 'block';
-          } else {
-            loadMoreBtn.style.display = 'none';
-            showErrorToast(
-              "We're sorry, but you've reached the end of search results.",
-              'bottomRight',
-              'blue'
-            );
-          }
-        } else {
-          showErrorToast(
-            'Sorry, there are no images matching your search query. Please try again!',
-            'topRight',
-            'red'
-          );
-        }
-      })
-      .catch(error => {
-        showErrorToast(
-          'An error occurred while fetching the images. Please try again!',
-          'topRight',
-          'red'
-        );
-        console.log(error);
-      })
-      .finally(() => {
-        hideLoader();
-        searchForm.reset();
-      });
-  } else {
-    gallery.innerHTML = '';
-    loadMoreBtn.style.display = 'none';
-    searchForm.reset();
-    showErrorToast(
-      'Please enter a search query!',
-      'topRight',
-      'red'
-    );
-  }
-});
+    try {
+      showLoader(loadMoreAfterSearchform);
+      const data = await fetchImages(query, (page = 1));
+      hitsToShow = data.totalHits;
 
-//LOAD MORE
-loadMoreBtn.addEventListener('click', event => {
-  event.preventDefault();
-  loadMoreBtn.style.display = 'none';
-  showLoader(loadMoreAfterBtn);
-  page++;
-  fetchImages(query, page)
-    .then(data => {
-      hitsToShow = data.totalHits - (page - 1) * perPage;
       if (hitsToShow >= 1) {
         const elements = createImageElements(data.hits);
-        gallery.append(...elements);
-        let lightbox = initializeLightbox();
+        updateGallery(gallery, elements);
         lightbox.refresh();
-        scrollByHeight();
         if (hitsToShow - perPage >= 1) {
           loadMoreBtn.style.display = 'block';
         } else {
@@ -106,20 +49,72 @@ loadMoreBtn.addEventListener('click', event => {
             "We're sorry, but you've reached the end of search results.",
             'bottomRight',
             'blue'
-          );
+          ); //помилка потестована
         }
+      } else { 
+        loadMoreBtn.style.display = 'none';
+        showErrorToast(
+          'Sorry, there are no images matching your search query. Please try again!',
+          'topRight',
+          'red'
+        );
+        gallery.innerHTML = ''; //помилка потестована
+
       }
-    })
-    .catch(error => {
+    } catch (error) {
+      gallery.innerHTML = '';
       showErrorToast(
         'An error occurred while fetching the images. Please try again!',
         'topRight',
         'red'
       );
       console.log(error);
-    })
-    .finally(() => {
+    } finally {
       hideLoader();
       searchForm.reset();
-    });
+    }
+  } else { 
+    loadMoreBtn.style.display = 'none';
+    showErrorToast('Please enter a search query!', 'topRight', 'red');
+    gallery.innerHTML = '';
+    hideLoader();
+    searchForm.reset(); //помилка потестована
+
+  }
+});
+//LOAD MORE
+loadMoreBtn.addEventListener('click', async event => {
+  event.preventDefault();
+  showLoader(loadMoreAfterBtn);
+  page++;
+  const data = await fetchImages(query, page);
+  try {
+    hitsToShow = data.totalHits - (page - 1) * perPage;
+    if (hitsToShow >= 1) {
+      const elements = createImageElements(data.hits);
+      gallery.append(...elements);
+      lightbox.refresh();
+      scrollByHeight();
+      if (hitsToShow - perPage >= 1) {
+        loadMoreBtn.style.display = 'block';
+      } else {
+        loadMoreBtn.style.display = 'none';
+        showErrorToast(
+          "We're sorry, but you've reached the end of search results.",
+          'bottomRight',
+          'blue'
+        ); //помилка потестована
+      }
+    }
+  } catch {
+    showErrorToast(
+      'An error occurred while fetching the images. Please try again!',
+      'topRight',
+      'red'
+    );
+    console.log(error);
+  } finally {
+    hideLoader();
+    searchForm.reset();
+  }
 });
