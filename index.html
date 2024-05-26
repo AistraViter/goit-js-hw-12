@@ -14,7 +14,7 @@
     <script type="module" crossorigin src="/goit-js-hw-12/commonHelpers.js"></script>
     <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-b11e2a50.js">
     <link rel="stylesheet" href="/goit-js-hw-12/assets/vendor-4b066c51.css">
-    <link rel="stylesheet" href="/goit-js-hw-12/assets/index-c1e67861.css">
+    <link rel="stylesheet" href="/goit-js-hw-12/assets/index-ba62126f.css">
   </head>
 
   <body>
@@ -47,4 +47,57 @@
   </body>
 </html>
 
-<!-- Це коментар, він не відображатиметься на сторінці -->
+<!--    searchForm.addEventListener('submit', async event => {
+  event.preventDefault();
+  query = searchField.value.trim();
+  if (query !== '') {
+    try {
+      showLoader(loadMoreAfterSearchform);
+      const data = await fetchImages(query, (page = 1));
+      hitsToShow = data.totalHits;
+
+      if (hitsToShow >= 1) {
+        const elements = createImageElements(data.hits);
+        updateGallery(gallery, elements);
+        lightbox.refresh();
+        if (hitsToShow - perPage >= 1) {
+          loadMoreBtn.style.display = 'block';
+        } else {
+          loadMoreBtn.style.display = 'none';
+          showErrorToast(
+            "We're sorry, but you've reached the end of search results.",
+            'bottomRight',
+            'blue'
+          );
+        }
+      } else {
+        gallery.innerHTML = '';
+        searchForm.reset();
+        showErrorToast(
+          'Sorry, there are no images matching your search query. Please try again!',
+          'topRight',
+          'red'
+        );
+      }
+    } catch (error) {
+      gallery.innerHTML = '';
+      searchForm.reset();
+      showErrorToast(
+        'An error occurred while fetching the images. Please try again!',
+        'topRight',
+        'red'
+      );
+      console.log(error);
+    } finally {
+      hideLoader();
+      searchForm.reset();
+    }
+  } else {
+    gallery.innerHTML = '';
+    searchForm.reset();
+    hideLoader();
+    showErrorToast('Please enter a search query!', 'topRight', 'red');
+  }
+});
+
+ -->
